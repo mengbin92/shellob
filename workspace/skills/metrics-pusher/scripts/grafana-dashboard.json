@@ -1,0 +1,153 @@
+{
+  "title": "Shellob 系统监控",
+  "uid": "shellob",
+  "version": 1,
+  "panels": [
+    {
+      "title": "CPU 使用率",
+      "type": "gauge",
+      "gridPos": {"x": 0, "y": 0, "w": 8, "h": 8},
+      "targets": [
+        {
+          "expr": "shellob_cpu_usage_percent{host=~\"$host\"}",
+          "legendFormat": "{{host}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"value": 0, "color": "green"},
+              {"value": 80, "color": "yellow"},
+              {"value": 95, "color": "red"}
+            ]
+          },
+          "max": 100
+        }
+      }
+    },
+    {
+      "title": "内存使用率",
+      "type": "gauge",
+      "gridPos": {"x": 8, "y": 0, "w": 8, "h": 8},
+      "targets": [
+        {
+          "expr": "shellob_memory_usage_percent{host=~\"$host\"}",
+          "legendFormat": "{{host}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"value": 0, "color": "green"},
+              {"value": 80, "color": "yellow"},
+              {"value": 90, "color": "red"}
+            ]
+          },
+          "max": 100
+        }
+      }
+    },
+    {
+      "title": "磁盘使用率",
+      "type": "gauge",
+      "gridPos": {"x": 16, "y": 0, "w": 8, "h": 8},
+      "targets": [
+        {
+          "expr": "shellob_disk_usage_percent{host=~\"$host\", mount=\"/\"}",
+          "legendFormat": "{{host}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"value": 0, "color": "green"},
+              {"value": 80, "color": "yellow"},
+              {"value": 90, "color": "red"}
+            ]
+          },
+          "max": 100
+        }
+      }
+    },
+    {
+      "title": "运行容器数",
+      "type": "stat",
+      "gridPos": {"x": 0, "y": 8, "w": 6, "h": 4},
+      "targets": [
+        {
+          "expr": "sum(shellob_docker_running_containers{host=~\"$host\"})",
+          "legendFormat": "运行中"
+        }
+      ]
+    },
+    {
+      "title": "网络连接数",
+      "type": "stat",
+      "gridPos": {"x": 6, "y": 8, "w": 6, "h": 4},
+      "targets": [
+        {
+          "expr": "sum(shellob_network_connections{host=~\"$host\"})",
+          "legendFormat": "连接数"
+        }
+      ]
+    },
+    {
+      "title": "系统负载（1/5/15分钟）",
+      "type": "timeseries",
+      "gridPos": {"x": 12, "y": 8, "w": 12, "h": 8},
+      "targets": [
+        {
+          "expr": "shellob_load_average_1m{host=~\"$host\"}",
+          "legendFormat": "1m"
+        },
+        {
+          "expr": "shellob_load_average_5m{host=~\"$host\"}",
+          "legendFormat": "5m"
+        },
+        {
+          "expr": "shellob_load_average_15m{host=~\"$host\"}",
+          "legendFormat": "15m"
+        }
+      ]
+    },
+    {
+      "title": "Docker 容器详情",
+      "type": "table",
+      "gridPos": {"x": 0, "y": 12, "w": 24, "h": 6},
+      "targets": [
+        {
+          "expr": "shellob_docker_running_containers{host=~\"$host\"}",
+          "format": "table"
+        },
+        {
+          "expr": "shellob_docker_memory_usage_mb{host=~\"$host\"}",
+          "format": "table"
+        }
+      ]
+    }
+  ],
+  "templating": {
+    "list": [
+      {
+        "name": "host",
+        "type": "query",
+        "query": "label_values(shellob_collected_at, host)",
+        "multi": true
+      }
+    ]
+  },
+  "refresh": "30s",
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  }
+}
