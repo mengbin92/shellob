@@ -163,11 +163,11 @@ Skills 是 Shellob 的核心能力单元。每个 Skill 对应一个运维场景
 
 ## 8. 迭代计划
 
-- [ ] v0.1 — 项目初始化，核心文档
-- [ ] v0.2 — SOUL.md / AGENTS.md / TOOLS.md 落地
-- [ ] v0.3 — P0 Skills 开发（log-analyzer、system-monitor、docker-ops）
-- [ ] v0.4 — P1 Skills 开发（k8s-ops、network-diag、db-ops）
-- [ ] v0.5 — P2 Skills 开发
+- [x] v0.1 — 项目初始化，核心文档
+- [x] v0.2 — SOUL.md / AGENTS.md / TOOLS.md 落地
+- [x] v0.3 — P0 Skills 开发（log-analyzer、system-monitor、docker-ops）
+- [x] v0.4 — P1 Skills 开发（k8s-ops、network-diag、db-ops）
+- [x] v0.5 — P2 Skills 开发
 - [ ] v1.0 — 完整运维能力集成
 
 ---
